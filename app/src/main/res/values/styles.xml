@@ -6,7 +6,7 @@
         <item name="android:windowActionBar">true</item>
         <item name="android:windowAnimationStyle">@style/windowanimation</item>
         <!--<item name="android:windowIsTranslucent">true</item>-->
-
+        <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
     <style name="titleBackground">
@@ -26,7 +26,7 @@
     </style>
 
     <style name="slide_from_button">
-        <item name="android:windowEnterAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/abc_slide_out_bottom</item>
     </style>
 </resources>

@@ -9,4 +9,42 @@
         android:textColorHighlight="#ff0000"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 </LinearLayout>

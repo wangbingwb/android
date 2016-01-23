@@ -49,7 +49,7 @@ public class MessageDialog extends CustomDialog {
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.message, null);
         super.setContentView(inflate, layoutParams, 1, 0.5);
-        super.setDimAmount(0.5f);
-        super.setGravity(Gravity.TOP);
+//        super.setDimAmount(0.5f);
+        super.setGravity(Gravity.CENTER);
     }
 }
