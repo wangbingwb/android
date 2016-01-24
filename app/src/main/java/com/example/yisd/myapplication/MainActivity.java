@@ -1,19 +1,19 @@
 package com.example.yisd.myapplication;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.wb.activity.BaseActivity;
+import com.wb.widgets.Clist;
 import com.wb.widgets.MessageDialog;
 import com.wb.widgets.RefreshListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -22,6 +22,9 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.title)
     private TextView title;
+
+    @Bind(R.id.list)
+    private RefreshListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,29 @@ public class MainActivity extends BaseActivity {
             });
         }
 
+        List<String> data = new ArrayList<>();
+        data.add("1");
+        data.add("2");
+        data.add("3");
+        data.add("4");
+        data.add("5");
+        data.add("6");
+        data.add("7");
+        data.add("8");
+        data.add("9");
+        data.add("10");
+        data.add("11");
+        data.add("12");
+        data.add("13");
+        data.add("14");
+        data.add("15");
+        data.add("16");
+        data.add("17");
+        data.add("18");
+        data.add("19");
+        data.add("20");
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, data);
+        list.setAdapter(stringArrayAdapter);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

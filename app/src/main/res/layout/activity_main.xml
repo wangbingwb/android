@@ -18,33 +18,11 @@
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
+    <com.wb.widgets.RefreshListView
+        android:id="@+id/list"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="0dp">
+    </com.wb.widgets.RefreshListView>
 
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <EditText
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 </LinearLayout>

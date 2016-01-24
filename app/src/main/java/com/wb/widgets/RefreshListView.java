@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.wb.util.CusMath;
+
 /**
  * Created by YiSD on 2015/12/5.
  */
@@ -33,34 +35,7 @@ public class RefreshListView extends ListView {
 
     public RefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        super.setOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-//                if (pullToBack) {
-//                    setSelection(0);
-//                }else if (pushToBack){
-//                    setSelection(getCount()-1);
-//                }
-            }
-        });
     }
-
-//    @Override
-//    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-//
-//        Log.e("---",l+"-"+t+"-"+oldl+"-"+oldt);
-//        if (overScrollState != OVERSCROLL_STATE_NORMAL){
-//            if (overScrollState == OVERSCROLL_STATE_PULL){
-//
-//            }
-//        }
-//        super.onScrollChanged(l, t, 100, 100);
-//    }
 
     @Override
     public void setOverScrollMode(int mode) {
@@ -71,8 +46,7 @@ public class RefreshListView extends ListView {
     public boolean onTouchEvent(MotionEvent ev) {
 
         if (ev.getAction() == MotionEvent.ACTION_UP){
-            overY = 0;
-            invalidate();
+            onBound();
         }
         //如果没有越界，交给自己处理
         if (overScrollState == OVERSCROLL_STATE_NORMAL){
@@ -141,7 +115,53 @@ public class RefreshListView extends ListView {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.translate(0,-overY);
+        canvas.translate(0,-overY/2);
         super.draw(canvas);
+    }
+
+    private void onBound(){
+        final int during = 1000;
+        final int d = 10;
+        if (overY > 0){
+            new Thread(){
+                @Override
+                public void run() {
+                    int i = 0;
+                    while (i < during && overY > 1){
+                        try {
+                            Thread.sleep(d);
+                            i += d;
+                            overY =CusMath.calculate(overY,during,i);
+                            postInvalidate();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        overY-=5;
+                        postInvalidate();
+                    }
+                    overY = 0;
+                    postInvalidate();
+                }
+            }.start();
+        }else if (overY < 0){
+            new Thread(){
+                @Override
+                public void run() {
+                    int i = 0;
+                    while (i < during && overY < -1){
+                        try {
+                            Thread.sleep(d);
+                            i += d;
+                            overY = -CusMath.calculate(-overY,during,i);
+                            postInvalidate();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    overY = 0;
+                    postInvalidate();
+                }
+            }.start();
+        }
     }
 }

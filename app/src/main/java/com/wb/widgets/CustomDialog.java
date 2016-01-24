@@ -2,23 +2,11 @@ package com.wb.widgets;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.os.Message;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
-
-import com.example.yisd.myapplication.R;
 
 /**
  * Created by YiSD on 2015/11/23.
@@ -27,7 +15,8 @@ public class CustomDialog extends Dialog{
     public CustomDialog(Context context) {
         super(context);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 0, 0, 0)));
+        this.getWindow().getDecorView().setPadding(0,0,0,0);
+//        this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 0, 0, 0)));
     }
 
     @Override
