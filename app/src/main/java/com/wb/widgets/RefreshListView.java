@@ -1,9 +1,11 @@
 package com.wb.widgets;
 
 import android.content.Context;
+import android.gesture.Gesture;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -17,9 +19,6 @@ public class RefreshListView extends ListView {
     public static int OVERSCROLL_STATE_NORMAL = 0;
     public static int OVERSCROLL_STATE_PULL = -1;
     public static int OVERSCROLL_STATE_PUSH = 1;
-
-    private boolean pullToNormal = false;
-    private boolean pushToNormal = false;
 
     private int overScrollState = OVERSCROLL_STATE_NORMAL;
     private float lastY = -1;
@@ -44,59 +43,53 @@ public class RefreshListView extends ListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-
-        if (ev.getAction() == MotionEvent.ACTION_UP){
-            onBound();
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if (overY < 0){
+                    overScrollState = OVERSCROLL_STATE_PULL;
+                }else if (overY > 0){
+                    overScrollState = OVERSCROLL_STATE_PUSH;
+                }
         }
-        //如果没有越界，交给自己处理
-        if (overScrollState == OVERSCROLL_STATE_NORMAL){
-            if (pullToNormal){
-                setSelection(0);
-                pullToNormal = false;
+        if (overScrollState != OVERSCROLL_STATE_NORMAL){
+            switch (ev.getAction()){
+                case MotionEvent.ACTION_UP:
+                    overScrollState = OVERSCROLL_STATE_NORMAL;
+                    onBound();
+                    return true;
             }
-            if (pushToNormal){
-                setSelection(getCount());
-                pushToNormal = false;
+
+            if (lastY < 0){
+                lastY = ev.getY();
+            }else {
+                Log.e("lastY=",""+lastY);
+                Log.e("ev=",""+ev.getY());
+                if (Math.abs(ev.getY() - lastY) > 30){
+                    lastY = ev.getY();
+                    return true;
+                }
+                if (ev.getY() - lastY != 0){
+                    if (overScrollState == OVERSCROLL_STATE_PULL){
+                        overY -= (ev.getY() - lastY);
+                        if (overY > 0){
+                            overY = 0;
+                            overScrollState = OVERSCROLL_STATE_NORMAL;
+                        }
+                    }else if(overScrollState == OVERSCROLL_STATE_PUSH){
+                        overY -= (ev.getY() - lastY);
+                        if (overY < 0){
+                            overY = 0;
+                            overScrollState = OVERSCROLL_STATE_NORMAL;
+                        }
+                    }
+                }
+                lastY = ev.getY();
+                invalidate();
             }
+            return true;
+        }else {
             return super.onTouchEvent(ev);
         }
-        if (lastY == -1){
-            lastY = ev.getY();
-        }
-        if (overScrollState == OVERSCROLL_STATE_PULL){
-            float temp = ev.getY();
-            if (temp >= lastY){
-                lastY = temp;
-                return super.onTouchEvent(ev);
-            }else {
-                overY += (lastY - temp);
-                lastY = temp;
-                if (overY > 0){
-                    overY = 0;
-                    overScrollState = OVERSCROLL_STATE_NORMAL;
-                    pullToNormal = true;
-                }
-                invalidate();
-            }
-        }
-        if (overScrollState == OVERSCROLL_STATE_PUSH){
-            float temp = ev.getY();
-            if (temp <= lastY){
-                lastY = temp;
-                return super.onTouchEvent(ev);
-            }else {
-                overY -= (temp - lastY);
-                Log.e("overY",""+overY);
-                lastY = temp;
-                if (overY < 0){
-                    overY = 0;
-                    overScrollState = OVERSCROLL_STATE_NORMAL;
-                    pushToNormal = true;
-                }
-                invalidate();
-            }
-        }
-        return true;
     }
 
     @Override
@@ -122,44 +115,31 @@ public class RefreshListView extends ListView {
     private void onBound(){
         final int during = 1000;
         final int d = 10;
-        if (overY > 0){
+        if (overY != 0){
             new Thread(){
                 @Override
                 public void run() {
+                    int flag = 1;
+                    if (overY<0){
+                        flag = -1;
+                        overY = -overY;
+                    }
+                    int temp = overY;
+
                     int i = 0;
-                    while (i < during && overY > 1){
+                    while (i < during && temp > 1 && overScrollState == OVERSCROLL_STATE_NORMAL){
                         try {
                             Thread.sleep(d);
                             i += d;
-                            overY =CusMath.calculate(overY,during,i);
+                            temp =CusMath.calculate(temp,during,i);
                             postInvalidate();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        overY-=5;
+                        temp-=5;
+                        overY = flag*temp;
                         postInvalidate();
                     }
-                    overY = 0;
-                    postInvalidate();
-                }
-            }.start();
-        }else if (overY < 0){
-            new Thread(){
-                @Override
-                public void run() {
-                    int i = 0;
-                    while (i < during && overY < -1){
-                        try {
-                            Thread.sleep(d);
-                            i += d;
-                            overY = -CusMath.calculate(-overY,during,i);
-                            postInvalidate();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    overY = 0;
-                    postInvalidate();
                 }
             }.start();
         }
