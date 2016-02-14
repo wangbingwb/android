@@ -108,7 +108,6 @@ public class BoundListView extends ListView {
             mOverY += deltaY;
             invalidate();
         }
-        Log.e("---","00000"+deltaY);
         return true;
     }
 
