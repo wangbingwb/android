@@ -8,9 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import com.wb.activity.BaseActivity;
-import com.wb.widgets.Clist;
 import com.wb.widgets.MessageDialog;
-import com.wb.widgets.RefreshListView;
+import com.wb.widgets.BoundListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class MainActivity extends BaseActivity {
     private TextView title;
 
     @Bind(R.id.list)
-    private RefreshListView list;
+    private BoundListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

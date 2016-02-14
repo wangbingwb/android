@@ -12,32 +12,35 @@ import android.widget.ListView;
 
 import com.wb.util.CusMath;
 
+import java.math.BigDecimal;
+
 /**
  * Created by YiSD on 2015/12/5.
  */
-public class RefreshListView extends ListView {
-    public static int OVERSCROLL_STATE_NORMAL = 0;
-    public static int OVERSCROLL_STATE_PULL = -1;
-    public static int OVERSCROLL_STATE_PUSH = 1;
+public class BoundListView extends ListView {
+    public static int OVERSCROLL_STATE_NORMAL = 0;//正常
+    public static int OVERSCROLL_STATE_PULL = -1;//拉
+    public static int OVERSCROLL_STATE_PUSH = 1;//推
 
-    private int overScrollState = OVERSCROLL_STATE_NORMAL;
-    private float lastY = -1;
+    private int mOverScrollState = OVERSCROLL_STATE_NORMAL;
+    private float lastY = -1;//最近一次Y轴位置
 
     /**
      * 小于0-->pull,大于0-->push
      */
-    private int overY = 0;
+    private int mOverY = 0;
 
-    public RefreshListView(Context context) {
+    public BoundListView(Context context) {
         super(context);
     }
 
-    public RefreshListView(Context context, AttributeSet attrs) {
+    public BoundListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     public void setOverScrollMode(int mode) {
+        //去掉边缘发光效果
         super.setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -45,16 +48,16 @@ public class RefreshListView extends ListView {
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-                if (overY < 0){
-                    overScrollState = OVERSCROLL_STATE_PULL;
-                }else if (overY > 0){
-                    overScrollState = OVERSCROLL_STATE_PUSH;
+                if (mOverY < 0){
+                    mOverScrollState = OVERSCROLL_STATE_PULL;
+                }else if (mOverY > 0){
+                    mOverScrollState = OVERSCROLL_STATE_PUSH;
                 }
         }
-        if (overScrollState != OVERSCROLL_STATE_NORMAL){
+        if (mOverScrollState != OVERSCROLL_STATE_NORMAL){
             switch (ev.getAction()){
                 case MotionEvent.ACTION_UP:
-                    overScrollState = OVERSCROLL_STATE_NORMAL;
+                    mOverScrollState = OVERSCROLL_STATE_NORMAL;
                     onBound();
                     return true;
             }
@@ -62,24 +65,26 @@ public class RefreshListView extends ListView {
             if (lastY < 0){
                 lastY = ev.getY();
             }else {
-                Log.e("lastY=",""+lastY);
-                Log.e("ev=",""+ev.getY());
                 if (Math.abs(ev.getY() - lastY) > 30){
                     lastY = ev.getY();
                     return true;
                 }
                 if (ev.getY() - lastY != 0){
-                    if (overScrollState == OVERSCROLL_STATE_PULL){
-                        overY -= (ev.getY() - lastY);
-                        if (overY > 0){
-                            overY = 0;
-                            overScrollState = OVERSCROLL_STATE_NORMAL;
+                    if (mOverScrollState == OVERSCROLL_STATE_PULL){
+                        mOverY -= (ev.getY() - lastY);
+                        if (mOverY > 0){
+                            mOverY = 0;
+                            mOverScrollState = OVERSCROLL_STATE_NORMAL;
+                            ev.setAction(MotionEvent.ACTION_DOWN);
+                            super.onTouchEvent(ev);
                         }
-                    }else if(overScrollState == OVERSCROLL_STATE_PUSH){
-                        overY -= (ev.getY() - lastY);
-                        if (overY < 0){
-                            overY = 0;
-                            overScrollState = OVERSCROLL_STATE_NORMAL;
+                    }else if(mOverScrollState == OVERSCROLL_STATE_PUSH){
+                        mOverY -= (ev.getY() - lastY);
+                        if (mOverY < 0){
+                            mOverY = 0;
+                            mOverScrollState = OVERSCROLL_STATE_NORMAL;
+                            ev.setAction(MotionEvent.ACTION_DOWN);
+                            super.onTouchEvent(ev);
                         }
                     }
                 }
@@ -96,50 +101,55 @@ public class RefreshListView extends ListView {
     protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
         if(isTouchEvent){
             if (deltaY < 0){
-                overScrollState = OVERSCROLL_STATE_PULL;
+                mOverScrollState = OVERSCROLL_STATE_PULL;
             }else {
-                overScrollState = OVERSCROLL_STATE_PUSH;
+                mOverScrollState = OVERSCROLL_STATE_PUSH;
             }
-            overY += deltaY;
+            mOverY += deltaY;
             invalidate();
         }
+        Log.e("---","00000"+deltaY);
         return true;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.translate(0,-overY/2);
+        canvas.translate(0,-mOverY/2);
         super.draw(canvas);
     }
 
+    /**
+     * 回弹归位
+     */
     private void onBound(){
         final int during = 1000;
         final int d = 10;
-        if (overY != 0){
+        if (mOverY != 0){
             new Thread(){
                 @Override
                 public void run() {
                     int flag = 1;
-                    if (overY<0){
+                    if (mOverY<0){
                         flag = -1;
-                        overY = -overY;
+                        mOverY = -mOverY;
                     }
-                    int temp = overY;
+                    int temp = mOverY;
 
                     int i = 0;
-                    while (i < during && temp > 1 && overScrollState == OVERSCROLL_STATE_NORMAL){
+                    while (i < during && Math.abs(temp) >= 5 && mOverScrollState == OVERSCROLL_STATE_NORMAL){
                         try {
                             Thread.sleep(d);
-                            i += d;
-                            temp =CusMath.calculate(temp,during,i);
-                            postInvalidate();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        temp-=5;
-                        overY = flag*temp;
+                        i += d;
+                        temp = (int) (Math.pow((double)i / during - 1, 2)*temp);
+                        mOverY = flag*temp;
+//                        Log.e("-mOverY=",""+mOverY);
                         postInvalidate();
                     }
+                    mOverY = 0;
+                    postInvalidate();
                 }
             }.start();
         }
