@@ -1,18 +1,10 @@
 package com.wb.widgets;
 
 import android.content.Context;
-import android.gesture.Gesture;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.widget.AbsListView;
 import android.widget.ListView;
-
-import com.wb.util.CusMath;
-
-import java.math.BigDecimal;
 
 /**
  * Created by YiSD on 2015/12/5.
