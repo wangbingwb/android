@@ -4,26 +4,20 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/btn"
-        android:text="更换壁纸"
+        android:id="@+id/startService"
+        android:text="start"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-    </Button>
-
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/stopService"
+        android:text="unbind"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <Button
-        android:id="@+id/hide"
-        android:text="更换壁纸"
+        android:id="@+id/getCount"
+        android:text="getCount"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-    </Button>
-
-    <com.example.yisd.myapplication.MyViewGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.example.yisd.myapplication.MyViewGroup>
+        android:layout_height="50dp" />
 
 </LinearLayout>
