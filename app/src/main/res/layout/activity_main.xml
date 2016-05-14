@@ -3,27 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn"
-        android:text="更换壁纸"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+    <!--<Button-->
+        <!--android:id="@+id/btn"-->
+        <!--android:text="下一个"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp">-->
+    <!--</Button>-->
 
-    </Button>
-
-
-    <Button
-        android:id="@+id/hide"
-        android:text="更换壁纸"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-    </Button>
-
-    <com.example.yisd.myapplication.MyViewGroup
+    <com.wb.widgets.WbRefreshListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.example.yisd.myapplication.MyViewGroup>
+    </com.wb.widgets.WbRefreshListView>
 
 </LinearLayout>

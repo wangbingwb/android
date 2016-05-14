@@ -20,23 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.TestServiceActivity">
 
-        </activity>
-        <activity android:name=".NextActivity"
-            android:launchMode="singleInstance">
+        <activity android:name=".NextActivity">
         </activity>
 
-
-
-
-
-        <service android:name=".MyWallpaper" android:label="My壁纸" android:permission="android.permission.BIND_WALLPAPER">
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService"></action>
-            </intent-filter>
-            <meta-data android:name="android.service.wallpaper" android:resource="@xml/livewallpaper"></meta-data>
-        </service>
+        <!--<service android:name=".MyWallpaper" android:label="My壁纸" android:permission="android.permission.BIND_WALLPAPER">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.service.wallpaper.WallpaperService"></action>-->
+            <!--</intent-filter>-->
+            <!--<meta-data android:name="android.service.wallpaper" android:resource="@xml/livewallpaper"></meta-data>-->
+        <!--</service>-->
 
     </application>
 

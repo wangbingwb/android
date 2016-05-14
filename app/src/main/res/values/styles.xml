@@ -5,7 +5,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowAnimationStyle">@style/windowanimation</item>
         <!--<item name="android:windowIsTranslucent">true</item>-->
-        <item name="android:windowSoftInputMode">adjustPan</item>
+        <!--<item name="android:windowSoftInputMode">adjustPan</item>-->
     </style>
 
     <style name="titleBackground">

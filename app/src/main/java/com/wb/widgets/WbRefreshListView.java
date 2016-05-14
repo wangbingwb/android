@@ -1,21 +1,14 @@
 package com.wb.widgets;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by wangbing on 2016/4/18.
@@ -25,11 +18,26 @@ public class WbRefreshListView extends LinearLayout {
     private LinearLayout mFooter;
     private WbListView mListView;
     private int mLastY;
+    private Handler mHandler = new Handler();
+    private int mDuring = 500;
+    private int mStep = 10;
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mOverY < 0){
+                mHeader.setMinimumHeight(Math.abs(mOverY/2));
+            }else if (mOverY > 0) {
+                mFooter.setMinimumHeight(Math.abs(mOverY/2));
+            }else {
+                mHeader.setMinimumHeight(0);
+                mFooter.setMinimumHeight(0);
+            }
+        }
+    };
 
     public WbRefreshListView(Context context) {
         super(context);
     }
-
 
     public WbRefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,6 +49,7 @@ public class WbRefreshListView extends LinearLayout {
         this.addView(mListView, layoutParams);
         mFooter = new LinearLayout(getContext());
         this.addView(mFooter, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        this.setOrientation(VERTICAL);
     }
 
     public void setAdapter(ListAdapter adapter) {
@@ -55,29 +64,17 @@ public class WbRefreshListView extends LinearLayout {
         }
 
         if (mOverScrollState != OVERSCROLL_STATE_NORMAL){
-            mOverY +=  mLastY - ev.getY();
+            mOverY +=  mLastY - (int)ev.getY();
             mLastY = (int) ev.getY();
 
             if ((mOverY > 0 && mOverScrollState == OVERSCROLL_STATE_PULL) || (mOverY < 0 && mOverScrollState == OVERSCROLL_STATE_PUSH)){
                 mOverY=0;
                 mOverScrollState = OVERSCROLL_STATE_NORMAL;
-                Class<AbsListView> superclass = (Class<AbsListView>) mListView.getClass().getSuperclass().getSuperclass();
-                try {
-                    Field mLastY = superclass.getDeclaredField("mLastY");
-                    mLastY.setAccessible(true);
-                    mLastY.setInt(mListView, (int) ev.getY());
-                    mLastY.setAccessible(false);
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
             }
             if ( mOverScrollState == OVERSCROLL_STATE_PULL){
-                mHeader.setMinimumHeight(Math.abs(mOverY)/2);
+                mHeader.setMinimumHeight(Math.abs(mOverY) / 2);
             }else if ( mOverScrollState == OVERSCROLL_STATE_PUSH){
                 mFooter.setMinimumHeight(Math.abs(mOverY) / 2);
-                mListView.invalidate();
             }
             return true;
         }
@@ -94,47 +91,28 @@ public class WbRefreshListView extends LinearLayout {
 
     /**
      * 回弹归位
+     *
      */
     private void onBound(){
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (mOverY < 0){
-                    mHeader.setMinimumHeight(Math.abs(mOverY/2));
-                }else if (mOverY > 0) {
-                    mFooter.setMinimumHeight(Math.abs(mOverY/2));
-                }else {
-                    mHeader.setMinimumHeight(0);
-                    mFooter.setMinimumHeight(0);
-                }
-            }
-        };
         new Thread(){
-            int during = 1000;
-            int d = 10;
-
             @Override
             public void run() {
-                int flag = 1;
-                if (mOverY<0){
-                    flag = -1;
-                    mOverY = -mOverY;
-                }
-                int temp = mOverY;
+                DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(2);
 
-                int i = 0;
-                while (i < during && Math.abs(temp) >= 5 && mOverScrollState == OVERSCROLL_STATE_NORMAL){
+                int temp = mOverY;
+                float i = 0;
+                while (i < mDuring && Math.abs(mOverY) >= 5 && mOverScrollState == OVERSCROLL_STATE_NORMAL){
                     try {
-                        Thread.sleep(d);
+                        Thread.sleep(mStep);
+                        i+=mStep;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    i += d;
-                    temp = (int) (Math.pow((double)i / during - 1, 2)*temp);
-                    mOverY = flag*temp;
-                    handler.sendEmptyMessage(1);
+                    mOverY = temp - (int)(temp * decelerateInterpolator.getInterpolation(i*1.0f/mDuring));
+                    mHandler.post(runnable);
                 }
                 mOverY = 0;
+                mHandler.post(runnable);
             }
         }.start();
     }
@@ -144,7 +122,6 @@ public class WbRefreshListView extends LinearLayout {
         public WbListView(Context context) {
             super(context);
         }
-
 
         @Override
         public void invalidate() {
