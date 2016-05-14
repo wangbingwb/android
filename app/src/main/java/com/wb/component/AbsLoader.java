@@ -3,7 +3,7 @@ package com.wb.component;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import com.wb.widgets.CustomDialog;
+import com.wb.dialog.CustomDialog;
 
 /**
  * Created by YiSD on 2015/11/25.

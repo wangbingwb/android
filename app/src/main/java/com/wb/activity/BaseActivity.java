@@ -9,13 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.yisd.myapplication.R;
-import com.wb.widgets.MessageDialog;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

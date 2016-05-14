@@ -1,4 +1,4 @@
-package com.wb.widgets;
+package com.wb.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

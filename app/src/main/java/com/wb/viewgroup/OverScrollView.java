@@ -1,7 +1,6 @@
-package com.wb.widgets;
+package com.wb.viewgroup;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package com.wb.widgets;
+package com.wb.viewgroup;
 
 import android.content.Context;
 import android.os.Handler;
