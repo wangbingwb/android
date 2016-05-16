@@ -3,8 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wb.viewgroup.WbRefreshListView
-        android:id="@+id/list"
+    <com.wb.viewgroup.WbViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
