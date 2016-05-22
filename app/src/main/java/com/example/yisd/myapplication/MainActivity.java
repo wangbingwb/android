@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.orhanobut.logger.Logger;
 import com.wb.activity.BaseActivity;
 import com.wb.viewgroup.WbViewPager;
 
@@ -60,5 +61,6 @@ public class MainActivity extends BaseActivity {
                 return list.get(position);
             }
         });
+
     }
 }
