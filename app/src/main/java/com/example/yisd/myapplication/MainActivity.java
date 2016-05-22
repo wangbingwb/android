@@ -1,42 +1,64 @@
 package com.example.yisd.myapplication;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 
 import com.wb.activity.BaseActivity;
-import com.wb.dialog.WbConfirmDialog;
+import com.wb.viewgroup.WbViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
 
-    @Bind(R.id.dia)
-    private Button dia;
+    @Bind(R.id.pager)
+    private WbViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final List<View> list = new ArrayList();
 
-        dia.setOnClickListener(new View.OnClickListener() {
+        for (int i = 0; i < 3; i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.zh_1);
+            list.add(imageView);
+        }
+
+        pager.setAdapter(new PagerAdapter() {
+
             @Override
-            public void onClick(View v) {
-                WbConfirmDialog wbConfirmDialog = new WbConfirmDialog(MainActivity.this);
+            public int getCount() {
+                return list.size();
+            }
 
-                wbConfirmDialog.show();
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView(list.get(position));
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                container.addView(list.get(position));
+                return list.get(position);
             }
         });
-
     }
 }
