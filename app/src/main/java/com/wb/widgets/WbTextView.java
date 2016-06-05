@@ -1,18 +1,18 @@
 package com.wb.widgets;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
-import com.example.yisd.myapplication.R;
-
 /**
- * Created by bingwang on 2016/5/24.
+ * Created by wangbing on 16/6/2.
  */
 public class WbTextView extends TextView {
+    private int mOffsetY = 0;
+    public Bitmap lastBitmap;
+
     public WbTextView(Context context) {
         super(context);
     }
@@ -22,10 +22,36 @@ public class WbTextView extends TextView {
     }
 
     @Override
-    public void setText(CharSequence text, BufferType type) {
-        super.setText(text, type);
+    protected void onDraw(Canvas canvas) {
+        if (lastBitmap != null) {
+            canvas.drawBitmap(lastBitmap, 0, mOffsetY - getHeight(), null);
+            canvas.translate(0, mOffsetY);
+        }
+        super.onDraw(canvas);
 
-        TranslateAnimation translateAnimation = new TranslateAnimation(0,50,0,50);
-        this.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.push_left_in));
+        if (mOffsetY == 0) {
+            lastBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            super.onDraw(new Canvas(lastBitmap));
+        }
+    }
+
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        mOffsetY = getHeight();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (mOffsetY > 0) {
+                    mOffsetY -= 5;
+                    if (mOffsetY < 0) mOffsetY = 0;
+                    postDelayed(this, 10);
+                } else {
+                    mOffsetY = 0;
+                }
+                System.out.println(mOffsetY);
+                invalidate();
+            }
+        });
+        super.setText(text, type);
     }
 }
