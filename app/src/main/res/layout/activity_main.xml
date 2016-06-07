@@ -3,35 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wb.widgets.WbTextView1
-        android:id="@+id/txt"
-        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 
+    <ImageView
+        android:src="@drawable/zh_3"
+        android:scaleType="fitXY"
+        android:layout_width="200dp"
+        android:layout_height="150dp" />
 
-    <SeekBar
-        android:id="@+id/seekbar"
-        android:max="1000"
-        android:progress="400"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <!--<Button-->
-        <!--android:text="下一个"-->
-        <!--android:id="@+id/btn"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp" />-->
-
-    <!--<Button-->
-        <!--android:text="getDraw"-->
-        <!--android:id="@+id/getDraw"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp" />-->
-
-    <!--<ImageView-->
-        <!--android:id="@+id/img"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+    <com.wb.widgets.BlurImage
+        android:src="@drawable/zh_3"
+        android:scaleType="fitXY"
+        android:layout_width="200dp"
+        android:layout_height="150dp" />
 
 </LinearLayout>
