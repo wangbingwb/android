@@ -3,17 +3,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ImageView
+    <com.wb.widgets.WbRoundImageView
+        android:src="@drawable/zh_3"
+        android:scaleType="fitXY"
+        android:layout_width="300dp"
+        android:layout_height="200dp" />
+    <com.wb.widgets.WbRoundImageView
         android:src="@drawable/zh_3"
         android:scaleType="fitXY"
         android:layout_width="200dp"
         android:layout_height="150dp" />
-
-    <com.wb.widgets.BlurImage
+    <com.wb.widgets.WbRoundImageView
         android:src="@drawable/zh_3"
         android:scaleType="fitXY"
-        android:layout_width="200dp"
-        android:layout_height="150dp" />
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
 </LinearLayout>

@@ -2,28 +2,25 @@ package com.wb.widgets;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.example.yisd.myapplication.R;
+import com.wb.util.FastBlur;
 
 /**
  * Created by bingwang on 2016/6/6.
  */
-public class RoundImageView extends ImageView {
-    public RoundImageView(Context context) {
+public class WbRoundImageView extends ImageView {
+    public WbRoundImageView(Context context) {
         super(context);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs) {
+    public WbRoundImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -35,6 +32,8 @@ public class RoundImageView extends ImageView {
         int height = getHeight();
         Bitmap srcBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         super.onDraw(new Canvas(srcBitmap));
+
+        canvas.drawBitmap(FastBlur.doBlur(srcBitmap,20,false), 0, 0, new Paint());
 
         //绘制原图
         {
@@ -48,16 +47,6 @@ public class RoundImageView extends ImageView {
             shapeCanvas.drawBitmap(srcBitmap, 0, 0, paint);
 
             canvas.drawBitmap(shapeBitmap, 0, 0, new Paint());
-        }
-
-        //绘制边框
-        {
-            Paint paint = new Paint();
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(Color.GREEN);
-            paint.setStrokeWidth(4);
-            paint.setAntiAlias(true);
-            canvas.drawCircle(width / 2, height / 2, Math.min(width, height) / 2 - 4, paint);
         }
     }
 }

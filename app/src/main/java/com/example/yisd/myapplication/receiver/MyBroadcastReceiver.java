@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Set;
+
 import static android.widget.Toast.*;
 
 /**
@@ -16,8 +18,13 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String name = intent.getStringExtra("name");
-        Log.e("/","-->"+name);
+        System.out.println("-----------------------------" + intent.getAction());
+
+        Set<String> categories = intent.getCategories();
+
+        for (String s : categories) {
+            System.out.println(s);
+        }
     }
 
 }

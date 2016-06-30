@@ -24,6 +24,13 @@
         <activity android:name=".NextActivity">
         </activity>
 
+        <receiver android:name=".receiver.MyBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.Test"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </receiver>
+
         <!--<service android:name=".MyWallpaper" android:label="My壁纸" android:permission="android.permission.BIND_WALLPAPER">-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.service.wallpaper.WallpaperService"></action>-->
