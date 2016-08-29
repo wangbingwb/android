@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NextActivity">
-        </activity>
-
         <receiver android:name=".receiver.MyBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.Test"></action>
