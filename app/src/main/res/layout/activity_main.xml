@@ -3,28 +3,40 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.wb.widgets.WbButton
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        android:text="Button"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    <RadioGroup
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.wb.widgets.WbButton
+        android:textColor="#00ff00"
+        android:textStyle="bold"
+        android:text="Button"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-            <com.wb.widgets.WbRadioButton
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="苹果" />
-            <com.wb.widgets.WbRadioButton
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="橘子" />
-            <com.wb.widgets.WbRadioButton
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="香蕉" />
+    <com.wb.widgets.WbButton
+        android:textColor="#0000ff"
+        android:textStyle="bold"
+        android:text="Button"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    </RadioGroup>
+    <com.wb.widgets.WbButton
+        android:textColor="#aaaaaa"
+        android:textStyle="bold"
+        android:text="Button has Color"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
