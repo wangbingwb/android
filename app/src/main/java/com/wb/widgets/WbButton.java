@@ -35,6 +35,18 @@ public class WbButton extends Button {
         int radius = (int) (5 * mScale);
         int width = (int) (1 * mScale);
 
+        //不可按时的drawable
+        {
+            RoundRectShape roundRectShape = new RoundRectShape(
+                    new float[]{radius,radius,radius,radius,radius,radius,radius,radius},
+                    new RectF(width,width,width,width),
+                    new float[]{radius,radius,radius,radius,radius,radius,radius,radius}
+            );
+            ShapeDrawable shapeDrawable = new ShapeDrawable(roundRectShape);
+            shapeDrawable.getPaint().setColor(Color.parseColor("#aaaaaa"));
+            stateListDrawable.addState(new int[]{-android.R.attr.state_enabled},shapeDrawable);
+        }
+        //正常的drawable
         {
             RoundRectShape roundRectShape = new RoundRectShape(
                             new float[]{radius,radius,radius,radius,radius,radius,radius,radius},
@@ -46,6 +58,7 @@ public class WbButton extends Button {
 
             stateListDrawable.addState(new int[]{-android.R.attr.state_pressed},shapeDrawable);
         }
+        //按下去的drawable
         {
             RoundRectShape roundRectShape = new RoundRectShape(
                     new float[]{radius,radius,radius,radius,radius,radius,radius,radius},
@@ -56,15 +69,17 @@ public class WbButton extends Button {
             shapeDrawable.getPaint().setColor(mColor);
             stateListDrawable.addState(new int[]{android.R.attr.state_pressed},shapeDrawable);
         }
-
         this.setBackground(stateListDrawable);
 
+        //各状态对应的字体颜色
         int[][] satate = {
-                {-android.R.attr.state_pressed}, {android.R.attr.state_pressed}
+                {-android.R.attr.state_enabled},
+                {-android.R.attr.state_pressed},
+                {android.R.attr.state_pressed}
         };
-        int[] colors = {mColor , Color.WHITE};
-        ColorStateList colorStateList = new ColorStateList(satate, colors);
+        int[] colors = {Color.parseColor("#aaaaaa"), mColor, Color.WHITE, };
 
+        ColorStateList colorStateList = new ColorStateList(satate, colors);
         this.setTextColor(colorStateList);
     }
 }
