@@ -40,7 +40,7 @@ public class WbButton extends Button {
             RoundRectShape roundRectShape = new RoundRectShape(
                     new float[]{radius,radius,radius,radius,radius,radius,radius,radius},
                     new RectF(width,width,width,width),
-                    new float[]{radius,radius,radius,radius,radius,radius,radius,radius}
+                    new float[]{radius - width,radius - width,radius - width,radius - width,radius - width,radius - width,radius - width,radius - width}
             );
             ShapeDrawable shapeDrawable = new ShapeDrawable(roundRectShape);
             shapeDrawable.getPaint().setColor(Color.parseColor("#aaaaaa"));
@@ -51,7 +51,7 @@ public class WbButton extends Button {
             RoundRectShape roundRectShape = new RoundRectShape(
                             new float[]{radius,radius,radius,radius,radius,radius,radius,radius},
                             new RectF(width,width,width,width),
-                            new float[]{radius,radius,radius,radius,radius,radius,radius,radius}
+                            new float[]{radius - width,radius - width,radius - width,radius - width,radius - width,radius - width,radius - width,radius - width}
                     );
             ShapeDrawable shapeDrawable = new ShapeDrawable(roundRectShape);
             shapeDrawable.getPaint().setColor(mColor);

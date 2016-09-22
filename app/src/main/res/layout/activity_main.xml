@@ -2,46 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.wb.widgets.WbButton
-        android:textColor="#ff0000"
-        android:textStyle="bold"
-        android:text="Button"
-        android:enabled="false"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.wb.widgets.WbButton
-        android:textColor="#00ff00"
-        android:textStyle="bold"
-        android:text="Button"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.wb.widgets.WbButton
-        android:textColor="#0000ff"
-        android:textStyle="bold"
-        android:text="Button"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.wb.widgets.WbButton
-        android:textColor="#aaaaaa"
-        android:textStyle="bold"
-        android:text="Button has Color"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.wb.widgets.WbSpinner
-        android:text="aaaa"
-        android:layout_width="200dp"
-        android:layout_height="50dp"/>
+v
+    <com.wb.widgets.WbTextView2
+        android:text="阿萨德撒"
+        android:gravity="center"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
 
 </LinearLayout>
