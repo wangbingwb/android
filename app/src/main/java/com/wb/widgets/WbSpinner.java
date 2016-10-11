@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class WbSpinner extends TextView {
     private String[] arrs = {
             "AAAAAAAAAAAA","BBBBBBBBBBB","CCCCCCCCCCC","DDDDDDDDDDD"
@@ -27,6 +29,7 @@ public class WbSpinner extends TextView {
     private int width;
     private boolean isShow = false;
     private PopupWindow popupWindow;
+    private TextView itemTxtView;
 
     public WbSpinner(Context context) {
         super(context);
@@ -70,7 +73,12 @@ public class WbSpinner extends TextView {
                 LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{colorDrawable,shapeDrawable});
                 optionList.setBackground(layerDrawable);
 
-                optionList.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,arrs));
+                itemTxtView = new TextView(getContext());
+                itemTxtView.setBackgroundColor(Color.BLUE);
+                int id = (int)(new Date().getTime());
+                itemTxtView.setId(id);
+
+                optionList.setAdapter(new ArrayAdapter<String>(context,id,arrs));
                 optionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

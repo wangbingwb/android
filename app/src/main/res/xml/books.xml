@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<books>
+    <book price="100$">
+        <name>疯狂Java</name>
+        <author>未知</author>
+    </book>
+    <book price="100$">
+        <name>疯狂英语</name>
+        <author>未知</author>
+    </book>
+</books>

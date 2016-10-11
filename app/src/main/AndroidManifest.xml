@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yisd.myapplication" >
+          package="com.example.yisd.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.SET_WALLPAPER"></uses-permission>
-    <uses-permission android:name="ANDROID.PERMISSION.CHANGE_CONFIGURATION"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="ANDROID.PERMISSION.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <receiver android:name=".receiver.MyBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.Test"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="android.intent.action.Test"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
 
-        <!--<service android:name=".MyWallpaper" android:label="My壁纸" android:permission="android.permission.BIND_WALLPAPER">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.service.wallpaper.WallpaperService"></action>-->
-            <!--</intent-filter>-->
-            <!--<meta-data android:name="android.service.wallpaper" android:resource="@xml/livewallpaper"></meta-data>-->
-        <!--</service>-->
+        <!-- <service android:name=".MyWallpaper" android:label="My壁纸" android:permission="android.permission.BIND_WALLPAPER"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.service.wallpaper.WallpaperService"></action> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data android:name="android.service.wallpaper" android:resource="@xml/livewallpaper"></meta-data> -->
+        <!-- </service> -->
 
     </application>
 
